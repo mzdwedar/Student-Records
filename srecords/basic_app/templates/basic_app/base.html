@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <title>Khaled A. Shurrab</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="{% static 'basic_app/css/mystyle.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"> 
+    <script src="{% static 'basic_app/js/app.js' %}" defer></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+           <a href="{% url 'index' %}"> <h4>Students manegment system</h4> </a> 
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'profile:report' %}">View Report</a></li>
+            <li><a href="{% url 'profile:info' %}">Student Information</a></li>
+            <li><a href="{% url 'profile:grades' %}">Grades</a></li>
+            <li><a href="{% url 'profile:financial' %}">Financial Profile</a></li>            
+        </ul>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+    {% block body_block %}
+
+    {% endblock %}
+    
+</body>
+</html>

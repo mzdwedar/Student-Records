@@ -1,0 +1,37 @@
+{% extends 'basic_app/base.html' %}
+
+{% block body_block %}
+
+{% if main %}
+<div class="infoMenu">
+    <h1>Student Information</h1>
+    <form method="POST" action="{% url 'profile:info' %}">
+            {% csrf_token %}
+        <label for="sid">Student ID: </label>
+        <input type="text" name="sid" placeholder="ID">
+        <input id='readinfo' type="submit" name="info" value="showinfo">
+        <input id='addinfo' type="submit" name="info" value="addinfo">
+    </form>
+</div>
+{% endif %}
+
+{% if addinfo %}
+<div class="student-form">
+    <h1>Student Form</h1>
+    <form enctype="multipart/form-data" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name='info' value="submit">   
+    </form>    
+</div>   
+{% endif %}
+
+{% if showinfo %}
+<div class="student-form">
+        <label for="sid">Student ID: </label>  <label> {{ sid }}</label> <br>
+        <label hidden for="">Student Name </label> <label> {{ info.firstname }} {{info.lastname}} </label> <br>
+        
+</div>   
+{% endif %}
+
+{% endblock %}

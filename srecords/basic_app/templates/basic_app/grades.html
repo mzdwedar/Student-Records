@@ -1,0 +1,64 @@
+{% extends 'basic_app/base.html' %}
+
+{% block body_block %}
+
+<h1>Student Grades</h1>
+
+{% if main %}
+<div class="container">
+        <div class="jumbotron">
+            <form method="post" action="{% url 'profile:grades' %}">
+              {% csrf_token %}
+              <label for="sid">Student ID: </label>
+              <input type="text" name="sid" placeholder="ID">
+              <input id='read-grades' type="submit" name="grades" value="Show Grades">
+              <input id='add-grades' type="submit" name="grades" value="Add Grades">
+            </form>
+        </div>
+</div>
+{% endif %}
+
+{% if newCourse %}
+<div class="container">
+  <div class="jumbotron">
+      <form method="post" action="{% url 'profile:grades' %}">
+
+        <label for="sid">Student ID: </label> <input type="text" name='sid' value={{ sid }} readonly>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input id='add-grades' type="submit" name="grades" value="Add Course">
+      </form>
+  </div>
+</div>
+{% endif %}
+
+{% if showCourse %}
+<div class="container">
+    <div class="jumbotron">
+      <label for="sid">Student ID: </label>  <label for=""> {{ sid }}</label> <br>
+      {% for year in grades.values %}
+      <label hidden for="year">Year: </label> <label hidden for=""> {{ year }} </label> <br>
+        {% for semester in year.values %}
+          <label hidden for="">Semester: </label> <label hidden for=""> {{ semester }} </label>  <br>
+          <label hidden for="">GPA: </label> <label hidden for=""></label>
+          <table>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th> 
+                <th>Grade</th>
+            </tr>
+            {% for course in semester.values %}
+            <tr>
+                <td>{{ course.cid }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.grade }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% endfor %}  
+      {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

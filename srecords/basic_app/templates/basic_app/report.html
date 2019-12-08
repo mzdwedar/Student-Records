@@ -1,0 +1,64 @@
+{% extends "basic_app/base.html" %}
+
+{% block body_block %}
+
+{% if main %}
+<div class="jumbotron">
+        <h1>Student Report</h1>
+        <form method="post" action="{% url 'profile:report' %}">
+            <label for="sid">Student ID: </label>
+            <input type="text" name="sid" placeholder="ID">
+            <input id='read-report' type="submit" name="report" value="View Student Report">
+        </form>
+</div>
+{% else %}
+    <div class="student-form">
+        <h1>Student Report</h1>
+        <h2>Student ID: </h2> <label> {{ sid }}</label><br>
+
+        <h3>Student Information</h3>
+        <label>Student Name </label> <label> {{ report.firstname }} {{report.lastname}} </label> <br>
+
+
+        <h3>Student Grades</h3>
+
+        <div class="container">
+                <div class="jumbotron">
+                  {% for year in report.grades.values %}
+                  <label hidden for="year">Year: </label> <label hidden for=""> {{ year }} </label> <br>
+                    {% for semester in year.values %}
+                      <label hidden for="">Semester: </label> <label hidden for=""> {{ semester }} </label>  <br>
+                      <label hidden for="">GPA: </label> <label hidden for=""></label>
+                      <table>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Course Name</th> 
+                            <th>Grade</th>
+                        </tr>
+                        {% for course in semester.values %}
+                        <tr>
+                            <td>{{ course.cid }}</td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.grade }}</td>
+                        </tr>
+                        {% endfor %}
+                      </table>
+                    {% endfor %}  
+                  {% endfor %}
+                </div>
+            </div>
+
+
+        <h3>Financial Profile</h3>
+        <div class="container">
+          <div class="jumbotron">
+              {% csrf_token %}
+
+              <label>Overall amount still to be paid: </label> <label>{{ report.totalRequired }}</label>
+          </div>
+    </div>
+    
+    </div>   
+
+{% endif %}
+{% endblock %}

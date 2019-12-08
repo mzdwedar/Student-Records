@@ -1,0 +1,47 @@
+{% extends 'basic_app/base.html' %}
+
+{% block body_block %}
+<h1>Financial Profile</h1>
+
+{% if main %}
+<div class="container">
+        <div class="jumbotron">
+            <form method="post" action="{% url 'profile:financial' %}">
+              {% csrf_token %}
+              <label for="sid">Student ID: </label>
+              <input type="text" name="sid" placeholder="ID">
+              <input type="submit" name="finance" value="View Financial Profile">
+              <input type="submit" name="finance" value="Deposit Money">
+            </form>
+        </div>
+</div>
+
+{% elif showFin %}
+<div class="container">
+        <div class="jumbotron">
+            {% csrf_token %}
+            <label for="sid">Student ID: </label> <input type="text" name='sid' value={{ sid }} readonly> <br>
+            <label>Overall amount still to be paid: </label> <label>{{ student.totalRequired }}</label>
+        </div>
+</div>
+{% elif addFin %}
+<div class="container">
+    <div class="jumbotron">
+        <form method="post" action="{% url 'profile:financial' %}">
+        {% csrf_token %}
+            <label for="sid">Student ID: </label> <input type="text" name='sid' value={{ sid }} readonly> <br>
+            <label>Paid Amount: </label> <input type="number" name='paid-amount'>
+            <label>Year: </label> <input type="text" name='year'>
+            <label>Semester: : </label> <input type="text" name='semester'>
+            <input type="submit" name="finance" value="Add Money">
+
+        </form>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+{% endblock %}
